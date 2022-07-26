@@ -1,0 +1,21 @@
+class Solution {
+    public int help(int []  nums, int low, int high){
+        if(low>high) return Integer.MIN_VALUE;
+        int currSum = 0,LeftSum = 0,RightSum = 0;
+        int mid = low + (high - low)/2;
+        for(int i = low; i<=mid-1; i++){
+            currSum+=nums[i];
+            LeftSum = Math.max(LeftSum,currSum);
+        }
+        currSum=0;
+        for(int i = mid+1;i<=high; i++){
+            currSum+=nums[i];
+            RightSum = Math.max(RightSum, currSum);
+        }
+        
+        return Math.max(LeftSum + RightSum + nums[mid], Math.max(help(nums,mid+1,high), help(nums,low, mid-1)));
+    }
+    public int maxSubArray(int[] nums) {
+        return help(nums,0,nums.length-1);
+    }
+}
